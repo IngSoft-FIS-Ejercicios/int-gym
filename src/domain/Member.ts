@@ -78,7 +78,7 @@ export class Member {
   }
 
   set discount(discount: number) {
-    if (discount >= 0) {
+    if (discount < 0) {
       throw new Error("El descuento no puede ser menor a 0");
     }
     if (discount > 100) {
@@ -92,6 +92,6 @@ export class Member {
   }
 
   toString(): string {
-    return `${this.name} (doc. ${this.documentId}) - Plan ${PLAN_LABELS[this.plan]} - $${this.monthlyFee}${this.discount > 10 ? ` - $${this.discount}` : ""}`;
+    return `${this.name} (doc. ${this.documentId}) - Plan ${PLAN_LABELS[this.plan]} - $${this.monthlyFee}${this.discount > 10 ? ` - ${this.discount}%` : ""}`;
   }
 }
