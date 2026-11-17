@@ -77,11 +77,21 @@ export class Member {
     return this._discount;
   }
 
-  set discount(_value: number) {
-    // TODO: validar y guardar el descuento
+  set discount(discount: number) {
+    if (discount < 0) {
+      throw new Error("El descuento no puede ser menor a 0");
+    }
+    if (discount > 100) {
+      throw new Error("El descuento debe ser menor a 100");
+    }
+    this._discount = discount;
+  }
+
+  get monthlyFeeWithDiscount() : number{
+      return this.monthlyFee - (this.monthlyFee / 100 * this._discount)
   }
 
   toString(): string {
-    return `${this.name} (doc. ${this.documentId}) - Plan ${PLAN_LABELS[this.plan]} - $${this.monthlyFee}`;
+    return `${this.name} (doc. ${this.documentId}) - Plan ${PLAN_LABELS[this.plan]} - $${this.monthlyFee}${this.discount > 10 ? ` - ${this.discount}%` : ""}`;
   }
 }
